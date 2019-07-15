@@ -1,0 +1,116 @@
+@import '~antd/es/style/themes/default.less';
+@import './utils/utils.less';
+
+.tableList {
+  .tableListOperator {
+    margin: 16px 0;
+    display: flex;
+    justify-content: space-between;
+    button {
+      margin-right: 8px;
+    }
+  }
+}
+
+:global {
+  .ant-drawer-body{
+    padding: 0 24px;
+  }
+  .ant-form-item{
+    margin-bottom: 10px;
+  }
+  .ant-table{
+    .ant-table-thead tr th{
+      background: #DADADA;
+      color: #000;
+    }
+  }
+  .ant-table-tbody > tr:not(.ant-table-expanded-row) > td {
+    background: #FBFBFB;
+  }
+}
+
+.tableListForm {
+  :global {
+    .ant-form-item {
+      display: flex;
+      margin-right: 0;
+      margin-bottom: 0;
+      > .ant-form-item-label {
+        width: auto;
+        padding-right: 8px;
+        line-height: 32px;
+      }
+      .ant-form-item-control {
+        line-height: 32px;
+      }
+    }
+    .ant-form-item-control-wrapper {
+      flex: 1;
+    }
+  }
+  .submitButtons {
+    display: block;
+    margin-bottom: 24px;
+    white-space: nowrap;
+  }
+}
+
+@media screen and (max-width: @screen-lg) {
+  .tableListForm :global(.ant-form-item) {
+    margin-right: 24px;
+  }
+}
+
+@media screen and (max-width: @screen-md) {
+  .tableListForm :global(.ant-form-item) {
+    margin-right: 8px;
+  }
+}
+
+.rowBt{
+  margin-bottom: 15px;
+}
+
+.handleIcon{
+  width: 32px;
+  height: 32px;
+  line-height: 38px;
+  font-size: 24px;
+}
+.stateTag {
+  display: inline-block;
+  background: #73d13d;
+  color: #FFF;
+  border-radius: 2px;
+  line-height: 20px;
+  font-size: 12px;
+  width: 7em;
+  text-align: center;
+}
+.statusGreen {
+  &:extend(.stateTag);
+  background: #73d13d;
+}
+
+.statusBlue {
+  &:extend(.stateTag);
+  background: #1890ff;
+}
+
+.statusRed {
+  &:extend(.stateTag);
+  background: #f5222d;
+}
+
+.otherRow{
+  line-height: 40px;
+  text-align: center;
+}
+
+.otherRowTitle{
+  &:extend(.otherRow);
+  background: #DFDFDF;
+  border-bottom: 1px solid #e8e8e8;
+}
+

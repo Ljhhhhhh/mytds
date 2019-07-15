@@ -1,0 +1,48 @@
+:global{
+  .ant-form-item-control{
+    line-height: inherit;
+  }
+  .ant-table{
+    .ant-table-thead tr th{
+      background: #DADADA;
+      color: #000;
+    }
+  }
+  .ant-table-tbody > tr:not(.ant-table-expanded-row) > td {
+    background: #FBFBFB;
+  }
+}
+
+.tableHeader{
+  margin: 15px auto;
+  background: #FFF;
+}
+
+.summaryWrap{
+  width: auto;
+  height: 100%;
+  margin: -15px;
+}
+
+.summary{
+  width: 100%;
+  height: 30px;
+  line-height: 30px;
+  display: flex;
+  border-bottom: 1px solid #e8e8e8;
+  &:last-child{
+    border-bottom: none;
+  }
+}
+
+.summaryTitle{
+  flex: 2;
+  max-width: 150px;
+  border-right: 1px solid #e8e8e8;
+  // text-align: center;
+}
+
+.summaryContent {
+  flex: 5;
+  text-align: center;
+}

@@ -1,0 +1,109 @@
+@import '~antd/es/style/themes/default.less';
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+.colorWeak {
+  filter: invert(80%);
+}
+
+.ant-layout {
+  min-height: 100vh;
+}
+
+canvas {
+  display: block;
+}
+
+body {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+@media (max-width: @screen-xs) {
+  .ant-table {
+    width: 100%;
+    overflow-x: auto;
+    &-thead > tr,
+    &-tbody > tr {
+      > th,
+      > td {
+        white-space: pre;
+        > span {
+          display: block;
+        }
+      }
+    }
+  }
+}
+
+// .ant-pro-sider-menu-sider.ant-layout-sider.ant-layout-sider-dark {
+//   flex: 0 0 196px!important;
+//   max-width: 196px!important;
+//   min-width: 196px!important;
+//   width: 196px!important;
+// }
+
+.formContent {
+  width: auto;
+  height: auto;
+  border-bottom: 1px solid #d3d3d3;
+}
+
+.formTitle {
+  line-height: 30px;
+  font-size: 16px;
+  color: #000;
+  font-weight: bold;
+  position: relative;
+  padding-left: 8px;
+  margin: 15px 0;
+  &::after{
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    height: 50%;
+    width: 3px;
+    transform: translateY(-50%);
+    background: #40a9ff;
+  }
+}
+
+.drawerFooter{
+  height: 50px;
+  width: auto;
+  box-shadow: 0 -5px 5px #ddd;
+  padding: 10px 30px;
+  margin: 0 -30px 30px;
+}
+
+.hideMore{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hideMore20 {
+  &:extend(.hideMore);
+  max-width: 30em;
+}
+
+.hideMore10 {
+  &:extend(.hideMore);
+  max-width: 10em;
+}
+
+.ant-popover{
+  max-width: 600px;
+  word-break: break-all;
+}

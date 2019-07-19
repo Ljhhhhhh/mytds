@@ -33,6 +33,7 @@ export interface TableListItem {
   isDelivery?: 0 | 1;
   is_refund?: 0 | 1;
   is_evaluate?: 0 | 1;
+  createrId?: number;
   sourcesInformation?: string;
   otherList: [{
     content?: string;

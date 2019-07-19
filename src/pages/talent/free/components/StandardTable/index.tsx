@@ -13,8 +13,9 @@ export interface StandardTableProps<T> extends Omit<TableProps<T>, 'columns'> {
     list: TableListItem[];
     pagination: any; // StandardTableProps<TableListItem>['pagination'];
   };
-  selectedRows: TableListItem[];
+  // selectedRows: TableListItem[];
   onSelectRow: (rows: any) => void;
+  expandedRowRender: any;
 }
 
 export interface StandardTableColumnProps extends ColumnProps<TableListItem> {

@@ -13,6 +13,7 @@ const RadioGroup = Radio.Group
 interface CreateFormProps extends FormComponentProps {
   handleModalVisible: (flag?: boolean) => void;
   originData: any;
+  clearData: any;
   refreshList: any;
   dispatch: Dispatch<any>;
   talent: any;
@@ -20,7 +21,7 @@ interface CreateFormProps extends FormComponentProps {
 
 const HandleForm: React.FC<CreateFormProps> = props => {
   const [trialTalentInfos, setTrialTalentInfos]: [any[], any] = useState([])
-  const { form, handleModalVisible, originData } = props;
+  const { form, handleModalVisible, originData, clearData } = props;
   const { getFieldDecorator, getFieldsValue, validateFields, resetFields } = form;
   const itemLayout = {
     lg: 10,
@@ -85,6 +86,7 @@ const HandleForm: React.FC<CreateFormProps> = props => {
   const handleCancel = () => {
     handleModalVisible(false);
     resetFields();
+    clearData();
     const value = {
       content: '',
       ditch: '',
@@ -127,6 +129,7 @@ const HandleForm: React.FC<CreateFormProps> = props => {
         setTrialTalentInfos([value]);
         if (!container) {
           handleModalVisible();
+          clearData()
           resetFields()
         }
       }

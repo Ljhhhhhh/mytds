@@ -13,8 +13,9 @@ export interface StandardTableProps<T> extends Omit<TableProps<T>, 'columns'> {
     list: TableListItem[];
     pagination: any; // StandardTableProps<TableListItem>['pagination'];
   };
-  selectedRows: TableListItem[];
-  onSelectRow: (rows: any) => void;
+  // selectedRows: TableListItem[];
+  expandedRowRender: any;
+  // onSelectRow: (rows: any) => void;
 }
 
 export interface StandardTableColumnProps extends ColumnProps<TableListItem> {
@@ -74,10 +75,10 @@ class StandardTable extends Component<StandardTableProps<TableListItem>, Standar
       ...item,
       total: selectedRows.reduce((sum, val) => sum + parseFloat(val[item.dataIndex || 0]), 0),
     }));
-    const { onSelectRow } = this.props;
-    if (onSelectRow) {
-      onSelectRow(selectedRows);
-    }
+    // const { onSelectRow } = this.props;
+    // if (onSelectRow) {
+    //   onSelectRow(selectedRows);
+    // }
 
     this.setState({ selectedRowKeys: currySelectedRowKeys, needTotalList });
   };

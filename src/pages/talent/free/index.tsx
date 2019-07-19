@@ -15,6 +15,7 @@ import {
   Upload,
   Icon,
   Modal,
+  Alert,
   Popover
 } from 'antd';
 import React, { Component, Fragment } from 'react';
@@ -60,7 +61,7 @@ interface TableListProps extends FormComponentProps {
 }
 
 interface TableListState {
-  canExpand: any;
+  // canExpand: any;
   modalVisible: boolean;
   updateModalVisible: boolean;
   selectedRows: TableListItem[];
@@ -98,9 +99,9 @@ interface IStatusRender {
 )
 class TableList extends Component<TableListProps, TableListState> {
   state: TableListState = {
-    canExpand: {
-      expandedRowRender: null
-    },
+    // canExpand: {
+    //   expandedRowRender: null
+    // },
     pageSize: 10,
     modalVisible: false,
     updateModalVisible: false,
@@ -233,7 +234,8 @@ class TableList extends Component<TableListProps, TableListState> {
       width: 160,
       align: 'center',
       render: (text, record) => {
-        const disabled = typeof this.state.canExpand.expandedRowRender !== 'function'
+        const {isAdmin, id: userId} = this.props.user.currentUser;
+        const disabled = !isAdmin && userId !== record.createdAdminId;
         return (
           <Fragment>
             <Button size="small" disabled={disabled} onClick={() => this.updateItem(record)}>编辑</Button>
@@ -247,12 +249,12 @@ class TableList extends Component<TableListProps, TableListState> {
 
   componentDidMount() {
     const { dispatch } = this.props;
-    const self = this;
-    this.setState({
-      canExpand: {
-        expandedRowRender: self.expandedRowRender
-      }
-    })
+    // const self = this;
+    // this.setState({
+    //   canExpand: {
+    //     expandedRowRender: self.expandedRowRender
+    //   }
+    // })
     dispatch({
       type: 'talent/fetch'
     });
@@ -333,12 +335,8 @@ class TableList extends Component<TableListProps, TableListState> {
   handleFormReset = () => {
     const { form, dispatch } = this.props;
     form.resetFields();
-    const self = this;
     this.setState({
       formValues: {},
-      canExpand: {
-        expandedRowRender: self.expandedRowRender
-      }
     });
     dispatch({
       type: 'talent/fetch',
@@ -392,8 +390,7 @@ class TableList extends Component<TableListProps, TableListState> {
       };
 
       this.setState({
-        formValues: values,
-        canExpand: {},
+        formValues: values
       });
 
       dispatch({
@@ -523,6 +520,10 @@ class TableList extends Component<TableListProps, TableListState> {
   }
 
   expandedRowRender = (field: any) => {
+    const {isAdmin, id: userId} = this.props.user.currentUser
+    if (!isAdmin && userId !== field.createdAdminId) {
+      return <Alert message="权限不足，无法查看详情！" type="error" showIcon />
+    }
     const html = transformBr(field.getInformation, 'html')
     const content = <div dangerouslySetInnerHTML={{__html: html}} />
     const introduction = <div dangerouslySetInnerHTML={{__html: transformBr(field.introduction, 'html')}} />
@@ -652,15 +653,15 @@ class TableList extends Component<TableListProps, TableListState> {
 
     const { selectedRows, modalVisible, updateModalVisible, stepFormValues } = this.state;
 
-    // const parentMethods = {
-    //   // handleAdd: this.handleAdd,
-    //   handleModalVisible: this.handleModalVisible,
-    // };
-
     const updateMethods = {
       handleUpdateModalVisible: this.handleUpdateModalVisible,
       handleUpdate: this.handleUpdate,
     };
+
+    const searchKeyLenth = Object.keys(this.state.formValues).filter((key: string) => {
+      if (this.state.formValues[key]) return key;
+      return;
+    }).length;
 
     return (
       <PageHeaderWrapper>
@@ -672,26 +673,22 @@ class TableList extends Component<TableListProps, TableListState> {
                 新建
               </Button>
               <div>
-              {
-                typeof this.state.canExpand.expandedRowRender === 'function' ? (
-                  <Button
+                {
+                  this.props.user.currentUser.isAdmin || !searchKeyLenth ? (
+                    <Button
                     icon="download"
                     type="dashed"
                     onClick={() => this.exportExcel()}
                   >
                     导出
                   </Button>
-                ) : null
-              }
-              {
-                typeof this.state.canExpand.expandedRowRender === 'function' ? (
-                  <Upload {...this.importExcel}>
-                    <Button>
-                      <Icon type="upload" /> 导入
-                    </Button>
-                  </Upload>
-                ) : null
-              }
+                  ) : null
+                }
+                <Upload {...this.importExcel}>
+                  <Button>
+                    <Icon type="upload" /> 导入
+                  </Button>
+                </Upload>
               </div>
 
               {selectedRows.length > 0 && (
@@ -701,7 +698,6 @@ class TableList extends Component<TableListProps, TableListState> {
               )}
             </div>
             <StandardTable
-              // selectedRows={selectedRows}
               loading={loading}
               scroll={{x: 1400}}
               data={data}
@@ -709,7 +705,7 @@ class TableList extends Component<TableListProps, TableListState> {
               columns={this.columns}
               onSelectRow={this.handleSelectRows}
               onChange={this.handleStandardTableChange}
-              {...this.state.canExpand}
+              expandedRowRender={this.expandedRowRender}
             />
 
           </div>
@@ -728,11 +724,19 @@ class TableList extends Component<TableListProps, TableListState> {
           visible={modalVisible}
           maskClosable={false}
           width={720}>
-            <HandleForm
-              refreshList={this.refreshList}
-              originData={this.state.originData}
-              handleModalVisible={this.handleModalVisible}
-            />
+            {
+              modalVisible ? (
+                <HandleForm
+                  refreshList={this.refreshList}
+                  originData={this.state.originData}
+                  clearData={() => this.setState({
+                    originData: {}
+                  })}
+                  handleModalVisible={this.handleModalVisible}
+                />
+              ) : null
+            }
+
         </Drawer>
       </PageHeaderWrapper>
     );

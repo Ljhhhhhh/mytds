@@ -30,6 +30,7 @@ export interface TableListItem {
   Introduction?: string;
   totalFanEstimate?: string;
   getInformation?: string;
+  createrId?: number;
   isDelivery?: 0 | 1;
   is_refund?: 0 | 1;
   is_evaluate?: 0 | 1;

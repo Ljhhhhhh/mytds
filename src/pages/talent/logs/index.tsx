@@ -3,6 +3,7 @@ import { connect } from 'dva'
 import { Row, Col, Button, DatePicker, Form, Select, Table, Drawer, Popover } from 'antd';
 import HandleLogs from './components/handleLogs';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
+import {transformBr} from '@/utils/utils'
 import styles from './index.less';
 
 const RangePicker = DatePicker.RangePicker
@@ -37,24 +38,33 @@ const Logs = (props: any) => {
       align: 'center',
       key: 'y',
       render: (d: any) => {
+        const summaryContent = <div dangerouslySetInnerHTML={{__html: transformBr(d.summaryWorkDay, 'html')}} />
+        const nextDayWorkSchedule = <div dangerouslySetInnerHTML={{__html: transformBr(d.nextDayWorkSchedule, 'html')}} />
+        const problemsProposals = <div dangerouslySetInnerHTML={{__html: transformBr(d.problemsProposals, 'html')}} />
         return (
           <div className={styles.summaryWrap}>
             <div className={styles.summary} >
               <span className={styles.summaryTitle}>当日工作总结</span>
-              <Popover content={d.summaryWorkDay}>
-                  <span className={styles.summaryContent}>{d.summaryWorkDay}</span>
+              <Popover content={summaryContent}>
+                  <div className={styles.summaryContent}>
+                    <span>{d.summaryWorkDay}</span>
+                  </div>
               </Popover>
             </div>
             <div className={styles.summary}>
               <span className={styles.summaryTitle}>次日工作安排</span>
-              <Popover content={d.nextDayWorkSchedule}>
-                <span className={styles.summaryContent}>{d.nextDayWorkSchedule}</span>
+              <Popover content={nextDayWorkSchedule}>
+                <div className={styles.summaryContent}>
+                  <span>{d.nextDayWorkSchedule}</span>
+                </div>
               </Popover>
             </div>
             <div className={styles.summary}>
               <span className={styles.summaryTitle}>问题、建议</span>
-                <Popover content={d.problemsProposals}>
-                  <span className={styles.summaryContent}>{d.problemsProposals}</span>
+                <Popover content={problemsProposals}>
+                  <div className={styles.summaryContent}>
+                    <span>{d.problemsProposals}</span>
+                  </div>
                 </Popover>
             </div>
           </div>

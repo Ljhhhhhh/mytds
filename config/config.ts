@@ -142,12 +142,19 @@ export default {
           authority: ['admin'],
           routes: [
             {
-              path: '/admin/add_user',
-              name: 'add_user',
-              component: './user/add_user',
+              path: '/admin/users',
+              name: 'users',
+              component: './user/users',
+              authority: ['admin'],
             },
             {
-              redirect: '/admin/add_user',
+              path: '/admin/roles',
+              name: 'roles',
+              component: './user/roles',
+              authority: ['admin'],
+            },
+            {
+              redirect: '/admin/users',
             }
           ],
         },

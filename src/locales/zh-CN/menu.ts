@@ -6,6 +6,8 @@ export default {
   'menu.register': '注册',
   'menu.admin': '管理员',
   'menu.admin.add_user': '添加用户',
+  'menu.admin.users': '用户列表',
+  'menu.admin.roles': '权限列表',
   'menu.account.change_pwd': '修改密码',
   'menu.register.result': '注册结果',
   'menu.dashboard': 'Dashboard',
